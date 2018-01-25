@@ -211,7 +211,7 @@ There are three possible transitions, connected using the `or` keyword:
 Again, we use existential quantification, to allow for arbitrary senders, voters and proposals.
 
 
-### Interesting properties
+## Analysis: Interesting properties
 
 An important property we want for our model is: the sum of all votes can never be greater
 than the sum of all weights that were distributed by the chairperson.
