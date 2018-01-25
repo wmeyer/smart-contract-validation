@@ -18,7 +18,7 @@ the model interactively and to check complex logical assertions automatically.
 
 The Alloy approach is considered a "lightweight" method 
 because it is intended to provide a fully automated analysis.
-Think of it as property-based testing (->QuickCheck) on steroids.
+Think of it as [property-based testing](https://en.wikipedia.org/wiki/QuickCheck) on steroids.
 
 
 ## Example: Voting
