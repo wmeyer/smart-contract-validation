@@ -265,4 +265,40 @@ The formal definitions of these assertions can be seen in the full model source.
 
 No problems were found by checking the properties we could think of. The Solidity voting example seems to be pretty solid.
 
+
+## Interactive exploration
+
+Still, so far we haven't taken a look at any instances of our model. How can we have confidence that our model
+actually makes sense?
+
+This is where interactive exploration comes into play. We can tell the Alloy Analyzer to generate example instances
+satisfying all model constraints, and we can then explore those instances with a graphical inspector.
+
+Let's take a look at an example. In the initial state "Ballot0", there are three proposals and three addresses. So far nobody has voted yet, in fact, nobody has the right to vote. "Address2" has been selected to be the chairperson:<br>
+<img width="600" src="example1_screenshot1.png" alt="Ballot0"/>
+
+"Address1" has been given the right to vote. Her "weight" is now 1:<br>
+<img width="600" src="example1_screenshot2.png" alt="Ballot1"/>
+
+"Address1" has delegated her vote to "Address0". She cannot vote again because the address is now in the "voted" set.
+"Address0" has received the delegated "weight" 1:<br>
+<img width="600" src="example1_screenshot3.png" alt="Ballot2"/>
+
+"Address2" has now also received the right to vote:<br>
+<img width="600" src="example1_screenshot4.png" alt="Ballot3"/>
+
+"Address0" has voted for "Proposal0":<br>
+<img width="600" src="example1_screenshot5.png" alt="Ballot4"/>
+
+"Address2" has voted for "Proposal1":<br>
+<img width="600" src="example1_screenshot6.png" alt="Ballot5"/>
+
+This looks like a reasonable sequence of events. Our model seems to generate meaningful instances. The only slightly suprising
+observation is that a vote can be delegated to a person without the right to vote.
+
+
+## A minor problem with the example contract
+
+When looking at further instances, a curious situation attracts attentions:
+
 TODO
