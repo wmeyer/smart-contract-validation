@@ -63,7 +63,7 @@ of logic and functional programming.
 Translating the contract can be a worthwile exercise in itself, leading to a deeper understanding
 of its behavior.
 
-The gist of the [model](https://github.com/wmeyer/smart-contract-validation/blob/master/voting.als) is explained in the subsequent sections.
+The gist of the [full model](ballot.als) is explained in the subsequent sections.
 
 
 ### Entities and relationships
