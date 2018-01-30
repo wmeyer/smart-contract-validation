@@ -41,9 +41,11 @@ be invoked by anyone at anytime.
       }
 
 - `delegate`: let somebody else vote for you
+
    Everybody can only call this once. Subsequent calls raise an exception.
 
 - `vote`: cast your vote for one of the proposals
+
    Again, this can only be called once.
 
 
