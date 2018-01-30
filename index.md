@@ -301,12 +301,12 @@ observation is that a vote can be delegated to a person without the right to vot
 
 ## A minor problem with the example contract
 
-When looking at further instances, a curious situation attracts attentions:
+When looking at further instances, a curious situation attracts attentions.
 
-There are three addresses and one proposal. So far, only `Address1` has the right to vote.
+There are three addresses and one proposal. So far, only `Address1` has the right to vote:
 <img width="600" src="example2_screenshot1.png" alt="Ballot1"/>
 
-Now, this is weird. `Address2` (which also happens to be the chairperson) has delegated her non-existing vote to `Address1`.
+Now, this is weird. `Address2` (which also happens to be the chairperson) has delegated her non-existing vote to `Address1`:
 <img width="600" src="example2_screenshot2.png" alt="Ballot2"/>
 
 This is almost certainly an error situation. Why would `Address2` call the `delegate` function when there is nothing to delegate?
