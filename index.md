@@ -310,7 +310,7 @@ Now, this is weird. `Address2` (which also happens to be the chairperson) has de
 <img width="600" src="example2_screenshot2.png" alt="Ballot2"/>
 
 This is almost certainly an error situation. Why would `Address2` call the `delegate` function when there is nothing to delegate?
-Such a call to `delegate` should probably fail. We can improve the Solidity example by adding:
+Such a call to `delegate` should probably fail. We can improve the Solidity example by adding a precondition to the `delegate` function:
 
     require(sender.weight > 0)
 
@@ -323,7 +323,7 @@ only for those which intuitively make sense. This is where the ability to create
 ## Summary
 
 Although analyzing the Solidity example voting contract didn't reveal any major problems, the analysis was not a waste of time.
-It increased our confidence in the correctness of the contract. In fact, now we *know* that some invariants always hold within
+It has increased our confidence in the correctness of the contract. In fact, now we *know* that some invariants always hold within
 the analyzed scope.
 
 So - should you validate your smart contracts with lightweight formal methods?
@@ -345,7 +345,7 @@ I feel confident that lightweight formal methods and smart contracts can be an e
 
 ## Sources
 
-https://www.ethereum.org/greeter
-https://en.wikipedia.org/wiki/Alloy_(specification_language)
-http://solidity.readthedocs.io/en/develop/solidity-by-example.html
-http://alloy.mit.edu/alloy/tutorials/online/
+- https://www.ethereum.org/greeter
+- https://en.wikipedia.org/wiki/Alloy_(specification_language)
+- http://solidity.readthedocs.io/en/develop/solidity-by-example.html
+- http://alloy.mit.edu/alloy/tutorials/online/
