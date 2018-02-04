@@ -41,9 +41,11 @@ be invoked by anyone at anytime.
       }
 
 - `delegate`: let somebody else vote for you
+
    Everybody can only call this once. Subsequent calls raise an exception.
 
 - `vote`: cast your vote for one of the proposals
+
    Again, this can only be called once.
 
 
@@ -61,7 +63,7 @@ of logic and functional programming.
 Translating the contract can be a worthwile exercise in itself, leading to a deeper understanding
 of its behavior.
 
-The gist of the [model](https://github.com/wmeyer/smart-contract-validation/blob/master/voting.als) is explained in the subsequent sections.
+The gist of the [full model](ballot.als) is explained in the subsequent sections.
 
 
 ### Entities and relationships
@@ -274,23 +276,25 @@ actually makes sense?
 This is where interactive exploration comes into play. We can tell the Alloy Analyzer to generate example instances
 satisfying all model constraints, and we can then explore those instances with a graphical inspector.
 
-Let's take a look at an example. In the initial state "Ballot0", there are three proposals and three addresses. So far nobody has voted yet, in fact, nobody has the right to vote. "Address2" has been selected to be the chairperson:<br>
+Let's take a look at an example.
+
+In the initial state `Ballot0`, there are three proposals and three addresses. So far nobody has voted yet, in fact, nobody has the right to vote. `Address2` has been selected to be the chairperson:<br>
 <img width="600" src="example1_screenshot1.png" alt="Ballot0"/>
 
-"Address1" has been given the right to vote. Her "weight" is now 1:<br>
+`Address1` has been given the right to vote. Her `weight` is now 1:<br>
 <img width="600" src="example1_screenshot2.png" alt="Ballot1"/>
 
-"Address1" has delegated her vote to "Address0". She cannot vote again because the address is now in the "voted" set.
-"Address0" has received the delegated "weight" 1:<br>
+`Address1` has delegated her vote to `Address0`. She cannot vote again because the address is now in the `voted` set.
+`Address0` has received the delegated `weight` 1:<br>
 <img width="600" src="example1_screenshot3.png" alt="Ballot2"/>
 
-"Address2" has now also received the right to vote:<br>
+`Address2` has also received the right to vote:<br>
 <img width="600" src="example1_screenshot4.png" alt="Ballot3"/>
 
-"Address0" has voted for "Proposal0":<br>
+`Address0` has voted for `Proposal0`:<br>
 <img width="600" src="example1_screenshot5.png" alt="Ballot4"/>
 
-"Address2" has voted for "Proposal1":<br>
+`Address2` has voted for `Proposal1`:<br>
 <img width="600" src="example1_screenshot6.png" alt="Ballot5"/>
 
 This looks like a reasonable sequence of events. Our model seems to generate meaningful instances. The only slightly suprising
@@ -299,6 +303,51 @@ observation is that a vote can be delegated to a person without the right to vot
 
 ## A minor problem with the example contract
 
-When looking at further instances, a curious situation attracts attentions:
+When looking at further instances, a curious situation attracts attentions.
 
-TODO
+There are three addresses and one proposal. So far, only `Address1` has the right to vote:
+<img width="600" src="example2_screenshot1.png" alt="Ballot1"/>
+
+Now, this is weird. `Address2` (which also happens to be the chairperson) has delegated her non-existing vote to `Address1`:
+<img width="600" src="example2_screenshot2.png" alt="Ballot2"/>
+
+This is almost certainly an error situation. Why would `Address2` call the `delegate` function when there is nothing to delegate?
+Such a call to `delegate` should probably fail. We can improve the Solidity example by adding a precondition to the `delegate` function:
+
+    require(sender.weight > 0)
+
+We might be tempted to dismiss this problem. After all, the normal sequence of events is that the chairperson first distributes voting
+rights and only then people start to vote.
+
+However, in distributed computing, especially in a public setting, we should be prepared for every possible sequence of events, not
+only for those which intuitively make sense. This is where the ability to create all possible sequences automatically by defining the legal transitions can be very valuable.
+
+## Summary
+
+Although analyzing the Solidity example voting contract didn't reveal any major problems, the analysis was not a waste of time.
+It has increased our confidence in the correctness of the contract. In fact, now we *know* that some invariants always hold within
+the analyzed scope.
+
+So - should you validate your smart contracts with lightweight formal methods?
+
+The initial investment is quite steep: learning a system like Alloy takes time.
+In the long term it is most likely a worthwile undertaking for any software developer.
+
+Some important resources for learning Alloy are
+ - the [Alloy tutorial](http://alloy.mit.edu/alloy/tutorials/online/)
+ - the book [Software Abstractions](http://alloy.mit.edu/alloy/book.html) by Daniel Jackson
+
+Smart contracts are typically less complex than large software systems (think: operating systems or complex business applications).
+This makes them more amendable for applying formal methods.
+
+Once a developer is familiar with Alloy, an analysis like this takes about half a work day.
+For high-stake contracts, the benefit can be *very* significant.
+I feel confident that lightweight formal methods and smart contracts can be an excellent match.
+
+
+## Sources
+
+- https://www.ethereum.org/greeter
+- https://en.wikipedia.org/wiki/Alloy_(specification_language)
+- http://solidity.readthedocs.io/en/develop/solidity-by-example.html
+- http://alloy.mit.edu/alloy/tutorials/online/
