@@ -283,23 +283,23 @@ satisfying all model constraints, and we can then explore those instances with a
 Let's take a look at an example.
 
 In the initial state `Ballot0`, there are three proposals and three addresses. So far nobody has voted yet, in fact, nobody has the right to vote. `Address2` has been selected to be the chairperson:<br>
-<img width="600" src="example1_screenshot1.png" alt="Ballot0"/>
+<img width="800" src="example1_screenshot1.png" alt="Ballot0"/>
 
 `Address1` has been given the right to vote. Her `weight` is now 1:<br>
-<img width="600" src="example1_screenshot2.png" alt="Ballot1"/>
+<img width="800" src="example1_screenshot2.png" alt="Ballot1"/>
 
 `Address1` has delegated her vote to `Address0`. She cannot vote again because the address is now in the `voted` set.
 `Address0` has received the delegated `weight` 1:<br>
-<img width="600" src="example1_screenshot3.png" alt="Ballot2"/>
+<img width="800" src="example1_screenshot3.png" alt="Ballot2"/>
 
 `Address2` has also received the right to vote:<br>
-<img width="600" src="example1_screenshot4.png" alt="Ballot3"/>
+<img width="800" src="example1_screenshot4.png" alt="Ballot3"/>
 
 `Address0` has voted for `Proposal0`:<br>
-<img width="600" src="example1_screenshot5.png" alt="Ballot4"/>
+<img width="800" src="example1_screenshot5.png" alt="Ballot4"/>
 
 `Address2` has voted for `Proposal1`:<br>
-<img width="600" src="example1_screenshot6.png" alt="Ballot5"/>
+<img width="800" src="example1_screenshot6.png" alt="Ballot5"/>
 
 This looks like a reasonable sequence of events. Our model seems to generate meaningful instances. The only slightly suprising
 observation is that a vote can be delegated to a person without the right to vote.
@@ -310,10 +310,10 @@ observation is that a vote can be delegated to a person without the right to vot
 When looking at further instances, a curious situation attracts attentions.
 
 There are three addresses and one proposal. So far, only `Address1` has the right to vote:
-<img width="600" src="example2_screenshot1.png" alt="Ballot1"/>
+<img width="800" src="example2_screenshot1.png" alt="Ballot1"/>
 
 Now, this is weird. `Address2` (which also happens to be the chairperson) has delegated her non-existing vote to `Address1`:
-<img width="600" src="example2_screenshot2.png" alt="Ballot2"/>
+<img width="800" src="example2_screenshot2.png" alt="Ballot2"/>
 
 This is almost certainly an error situation. Why would `Address2` call the `delegate` function when there is nothing to delegate?
 Such a call to `delegate` should probably fail. We can improve the Solidity example by adding a precondition to the `delegate` function:
