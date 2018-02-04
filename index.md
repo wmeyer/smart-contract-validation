@@ -57,6 +57,10 @@ For details, please take a look at the [full source code](http://solidity.readth
 ## Creating the model
 
 Before we can analyze the contract behavior, we need to create a matching Alloy model.
+The goal is to create a formal specification which can be checked for certain properties.
+(Note: even if your specification is perfect, you still need to verify that your contract actually
+implements it. See [Security Considerations](http://solidity.readthedocs.io/en/latest/security-considerations.html)  in the Solidity documentation for details.
+
 Alloy is a very different language from Solidity.
 While Solidity is object-oriented and imperative, Alloy is declarative and feels like a mixture
 of logic and functional programming.
@@ -350,4 +354,5 @@ I feel confident that lightweight formal methods and smart contracts can be an e
 - https://www.ethereum.org/greeter
 - https://en.wikipedia.org/wiki/Alloy_(specification_language)
 - http://solidity.readthedocs.io/en/develop/solidity-by-example.html
+- http://solidity.readthedocs.io/en/latest/security-considerations.html
 - http://alloy.mit.edu/alloy/tutorials/online/
