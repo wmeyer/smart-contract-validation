@@ -59,7 +59,7 @@ For details, please take a look at the [full source code](http://solidity.readth
 Before we can analyze the contract behavior, we need to create a matching Alloy model.
 The goal is to create a formal specification which can be checked for certain properties.
 (Note: even if your specification is perfect, you still need to verify that your contract actually
-implements it. See [Security Considerations](http://solidity.readthedocs.io/en/latest/security-considerations.html)  in the Solidity documentation for details.
+implements it. See [Security Considerations](http://solidity.readthedocs.io/en/latest/security-considerations.html)  in the Solidity documentation for details.)
 
 Alloy is a very different language from Solidity.
 While Solidity is object-oriented and imperative, Alloy is declarative and feels like a mixture
