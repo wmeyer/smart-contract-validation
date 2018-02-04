@@ -1,5 +1,5 @@
 
-# Validating smart contracts with lightweight formal methods
+# Validating Smart Contracts with Lightweight Formal Methods
 
 In Ethereum, smart contracts are account-holding objects on the blockchain.
 They contain code and storage, can interact with other contracts, and send and receive "ether"
@@ -54,7 +54,7 @@ The currently leading proposal can be queried by a fourth public function.
 For details, please take a look at the [full source code](http://solidity.readthedocs.io/en/develop/solidity-by-example.html#voting). It is well commented.
 
 
-## Creating the model
+## Creating the Model
 
 Before we can analyze the contract behavior, we need to create a matching Alloy model.
 The goal is to create a formal specification which can be checked for certain properties.
@@ -70,7 +70,7 @@ of its behavior.
 The gist of the [full model](ballot.als) is explained in the subsequent sections.
 
 
-### Entities and relationships
+### Entities and Relationships
 There are three kinds of entities we are interested in in this model: addresses, proposals and ballots.
 Addresses represent Ethereum addresses. We do not care about the details of addresses. The only
 thing that matters is their identity. So we define addresses as an empty signature:
@@ -166,7 +166,7 @@ There are to important differences, though:
 
 
 
-### Enforcing only legal states
+### Enforcing only Legal States
 
 We want to constrain the state space to legal ballots. Only ballots that can be created
 from the initial state by applying well-defined transitions should be allowed.
@@ -217,7 +217,7 @@ There are three possible transitions, connected using the `or` keyword:
 Again, we use existential quantification, to allow for arbitrary senders, voters and proposals.
 
 
-## Analysis: Interesting properties
+## Analysis: Interesting Properties
 
 An important property we want for our model is: the sum of all votes can never be greater
 than the sum of all weights that were distributed by the chairperson.
@@ -272,7 +272,7 @@ The formal definitions of these assertions can be seen in the full model source.
 No problems were found by checking the properties we could think of. The Solidity voting example seems to be pretty solid.
 
 
-## Interactive exploration
+## Interactive Exploration
 
 Still, so far we haven't taken a look at any instances of our model. How can we have confidence that our model
 actually makes sense?
@@ -305,7 +305,7 @@ This looks like a reasonable sequence of events. Our model seems to generate mea
 observation is that a vote can be delegated to a person without the right to vote.
 
 
-## A minor problem with the example contract
+## A Minor Problem with the Example Contract
 
 When looking at further instances, a curious situation attracts attentions.
 
