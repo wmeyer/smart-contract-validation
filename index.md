@@ -346,10 +346,10 @@ I feel confident that lightweight formal methods and smart contracts can be an e
 
 ## Sources
 
-- https://www.ethereum.org/greeter
-- https://en.wikipedia.org/wiki/Alloy_(specification_language)
-- http://solidity.readthedocs.io/en/develop/solidity-by-example.html
-- http://solidity.readthedocs.io/en/latest/security-considerations.html
+- [https://www.ethereum.org/greeter](https://www.ethereum.org/greeter)
+- [https://en.wikipedia.org/wiki/Alloy_(specification_language)](https://en.wikipedia.org/wiki/Alloy_(specification_language))
+- [http://solidity.readthedocs.io/en/develop/solidity-by-example.html](http://solidity.readthedocs.io/en/develop/solidity-by-example.html)
+- [http://solidity.readthedocs.io/en/latest/security-considerations.html](http://solidity.readthedocs.io/en/latest/security-considerations.html)
 
 For learning Alloy, take a look at
  - the [Alloy tutorial](http://alloy.mit.edu/alloy/tutorials/online/), and
