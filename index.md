@@ -29,7 +29,7 @@ This contract does not involve money, but it is nevertheless an interesting targ
 
 Once a voting contract is created by a chairperson (represented by her Ethereum address),
 there are three public functions that change the current state. These public functions may, in principle,
-be invoked by anyone at anytime.
+be invoked by anyone at any time.
 
 - `giveRightToVote`:
 
