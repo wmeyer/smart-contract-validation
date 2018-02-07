@@ -66,7 +66,7 @@ of logic and functional programming.
 Translating the contract can be a worthwile exercise in itself, leading to a deeper understanding
 of its behavior.
 
-The gist of the [full model](ballot.als) is explained in the subsequent sections.
+The gist of the [full model](https://github.com/wmeyer/smart-contract-validation/blob/master/ballot.als) is explained in the subsequent sections.
 
 
 ### Entities and Relationships
@@ -209,7 +209,7 @@ There are three possible transitions, connected using the `or` keyword:
 1. Giving someone the right to vote, using the previously defined predicate `giveRightToVote`.
 
 2. Delegating the vote to somebody else. The definition of the `delegate` predicate is not shown
-   here but can be seen in the [full listing](ballot.als).
+   here but can be seen in the [full listing](https://github.com/wmeyer/smart-contract-validation/blob/master/ballot.als).
 
 3. Voting for a proposal, using the predicate `vote` (also not shown here).
 
@@ -266,7 +266,7 @@ Some other assertions that were successfully checked:
 - There can never be a voter that has both voted and delegated.
 - It does not matter whether we delegate to someone before or after she has voted. (Both cases are handled in the `delegate` function.)
 - There can never be a loop of delegation, i.e. a situation were someone directly or indirectly delegates his vote to himself.
-The formal definitions of these assertions can be seen in the [full model source](ballot.als).
+The formal definitions of these assertions can be seen in the [full model source](https://github.com/wmeyer/smart-contract-validation/blob/master/ballot.als).
 
 No problems were found by checking the properties we could think of. The Solidity voting example seems to be pretty solid.
 
