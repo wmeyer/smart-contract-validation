@@ -80,7 +80,7 @@ thing that matters is their identity. So we define addresses as an empty signatu
     sig Address {}
 
 Signatures are similar to classes in object-oriented languages. A signature defines a set
-of objects and optionally relationships to instances of other signatures.
+of objects and, optionally, relationships to other signatures.
 
     sig Proposal {}
 
