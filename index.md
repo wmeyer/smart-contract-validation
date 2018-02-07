@@ -1,6 +1,3 @@
-
-# Validating Smart Contracts with Lightweight Formal Methods
-
 In Ethereum, smart contracts are account-holding objects on the blockchain.
 They contain code and storage, can interact with other contracts, and send and receive "ether"
 to and from other accounts (ether is the digital currency used on the Ethereum blockchain).
