@@ -88,7 +88,7 @@ The details of proposals also don't matter for our model. The only important thi
 a set of proposals that can be voted on.
 
     sig Ballot {
-      chairperson: Address
+      chairperson: Address,
       voted: set Address,
       vote: Address -> lone Proposal,
       delegate: Address -> lone Address,
@@ -99,7 +99,7 @@ a set of proposals that can be voted on.
 The only non-trivial entity in this model is the ballot. It has a number of relationships that are
 used to keep track of the current voting situation. A ballot captures the whole current state.
 
-A ballot has exactly one chairperson. It is the address of the user that created the ballot.
+A ballot has exactly one chairperson. It is represented by the address of the user that created the ballot.
 This is equivalent to the `chairperson` field in the Solidity example.
 
 The `voted` set is used to remember which addresses already voted or delegated. 
@@ -111,7 +111,7 @@ Every address can vote for at most one proposal.
 
 `delegate` is similar. It is used to remember who delegated to whom.
 
-`weight` determines how much the vote of an address counts once it is cast. Only addresses that have been
+`weight` determines how much the vote of an address will count. Only addresses that have been
 delegated to can have a weight greater than 1.
 
 Finally, `count` is the result of the vote so far. The keyword `one` enforces that every proposal must
@@ -212,7 +212,7 @@ There are three possible transitions, connected using the `or` keyword:
 1. Giving someone the right to vote, using the previously defined predicate `giveRightToVote`.
 
 2. Delegating the vote to somebody else. The definition of the `delegate` predicate is not shown
-   here but can be seen in the full listing.
+   here but can be seen in the [full listing](ballot.als).
 
 3. Voting for a proposal, using the predicate `vote` (also not shown here).
 
@@ -261,15 +261,15 @@ Let's increase the number of ballots to 6:
        No counterexample found. Assertion may be valid. 16245ms.
 
 The analysis has taken a lot more time, but still no counterexample has been found.
-Of course, we could start an analysis with an even large scope. But that does not seem to be necessary.
+Of course, we could start an analysis with an even larger scope. But that does not seem to be necessary.
 It is reasonable to assume that the assertion always holds. 
 We rely on the "small scope hypothesis": that a high proportion of bugs can be found by testing a program for all test inputs within some small scope.
 
 Some other assertions that were successfully checked:
 - There can never be a voter that has both voted and delegated.
-- It does not matter whether we delegate to someone before or after she has voted. (Both cases are handled in `delegate`.)
+- It does not matter whether we delegate to someone before or after she has voted. (Both cases are handled in the `delegate` function.)
 - There can never be a loop of delegation, i.e. a situation were someone directly or indirectly delegates his vote to himself.
-The formal definitions of these assertions can be seen in the full model source.
+The formal definitions of these assertions can be seen in the [full model source](ballot.als).
 
 No problems were found by checking the properties we could think of. The Solidity voting example seems to be pretty solid.
 
@@ -287,20 +287,20 @@ Let's take a look at an example.
 In the initial state `Ballot0`, there are three proposals and three addresses. So far nobody has voted yet, in fact, nobody has the right to vote. `Address2` has been selected to be the chairperson:<br>
 <img width="800" src="example1_screenshot1.png" alt="Ballot0"/>
 
-`Address1` has been given the right to vote. Her `weight` is now 1:<br>
+In the next state, `Address1` has been given the right to vote. Her `weight` is now 1:<br>
 <img width="800" src="example1_screenshot2.png" alt="Ballot1"/>
 
 `Address1` has delegated her vote to `Address0`. She cannot vote again because the address is now in the `voted` set.
 `Address0` has received the delegated `weight` 1:<br>
 <img width="800" src="example1_screenshot3.png" alt="Ballot2"/>
 
-`Address2` has also received the right to vote:<br>
+`Address2` also has received the right to vote:<br>
 <img width="800" src="example1_screenshot4.png" alt="Ballot3"/>
 
 `Address0` has voted for `Proposal0`:<br>
 <img width="800" src="example1_screenshot5.png" alt="Ballot4"/>
 
-`Address2` has voted for `Proposal1`:<br>
+Finally, `Address2` has voted for `Proposal1`:<br>
 <img width="800" src="example1_screenshot6.png" alt="Ballot5"/>
 
 This looks like a reasonable sequence of events. Our model seems to generate meaningful instances. The only slightly suprising
@@ -311,7 +311,7 @@ observation is that a vote can be delegated to a person without the right to vot
 
 When looking at further instances, a curious situation attracts attentions.
 
-There are three addresses and one proposal. So far, only `Address1` has the right to vote:
+In the first state, there are three addresses and one proposal. So far, only `Address1` has the right to vote:
 <img width="800" src="example2_screenshot1.png" alt="Ballot1"/>
 
 Now, this is weird. `Address2` (which also happens to be the chairperson) has delegated her non-existing vote to `Address1`:
@@ -323,7 +323,7 @@ Such a call to `delegate` should probably fail. We can improve the Solidity exam
     require(sender.weight > 0)
 
 We might be tempted to dismiss this problem. After all, the normal sequence of events is that the chairperson first distributes voting
-rights and only then people start to vote.
+rights and only then people start to vote and delegate.
 
 However, in distributed computing, especially in a public setting, we should be prepared for every possible sequence of events, not
 only for those which intuitively make sense. This is where the ability to create all possible sequences automatically by defining the legal transitions can be very valuable.
@@ -334,16 +334,12 @@ Although analyzing the Solidity example voting contract didn't reveal any major 
 It has increased our confidence in the correctness of the contract. In fact, now we *know* that some invariants always hold within
 the analyzed scope.
 
-So - should you validate your smart contracts with lightweight formal methods?
+So &ndash; should you validate your smart contracts with lightweight formal methods?
 
 The initial investment is quite steep: learning a system like Alloy takes time.
 In the long term it is most likely a worthwile undertaking for any software developer.
 
-Some important resources for learning Alloy are
- - the [Alloy tutorial](http://alloy.mit.edu/alloy/tutorials/online/)
- - the book [Software Abstractions](http://alloy.mit.edu/alloy/book.html) by Daniel Jackson
-
-Smart contracts are typically less complex than large software systems (think: operating systems or complex business applications).
+Smart contracts are typically less complex than large software systems (like operating systems or complex business applications).
 This makes them more amendable for applying formal methods.
 
 Once a developer is familiar with Alloy, an analysis like this takes about half a work day.
@@ -357,4 +353,8 @@ I feel confident that lightweight formal methods and smart contracts can be an e
 - https://en.wikipedia.org/wiki/Alloy_(specification_language)
 - http://solidity.readthedocs.io/en/develop/solidity-by-example.html
 - http://solidity.readthedocs.io/en/latest/security-considerations.html
-- http://alloy.mit.edu/alloy/tutorials/online/
+
+For learning Alloy, take a look at
+ - the [Alloy tutorial](http://alloy.mit.edu/alloy/tutorials/online/), and
+ - the book [Software Abstractions](http://alloy.mit.edu/alloy/book.html) by Daniel Jackson
+
